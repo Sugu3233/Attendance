@@ -1,6 +1,6 @@
 package com.attendance.student_attendance.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class User {
 
     private String district;
 
-    private Date dob;
+    private LocalDate dob;
 
     private String role;
 

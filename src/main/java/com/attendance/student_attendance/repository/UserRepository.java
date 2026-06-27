@@ -48,6 +48,33 @@ public class UserRepository {
         return user;
     }
 
+    public void saveAll(List<User> users) {
+
+        String sql = """
+                insert into users
+                (name,mobile_no,password,address,city,district,dob,role,oprtnl_flag)
+                values (?,?,?,?,?,?,?,?,?)
+                """;
+
+        for (User user : users) {
+
+            Object[] data = {
+                    user.getName(),
+                    user.getMobile_no(),
+                    user.getPassword(),
+                    user.getAddress(),
+                    user.getCity(),
+                    user.getDistrict(),
+                    user.getDob(),
+                    user.getRole(),
+                    user.getOprtnl_flag()
+            };
+
+            template.update(sql, data);
+        }
+
+    }
+
     private RowMapper<User> commonMapper() {
         return (rs, rowNum) -> {
             User user = new User();
@@ -57,7 +84,7 @@ public class UserRepository {
             user.setAddress(rs.getString("address"));
             user.setCity(rs.getString("city"));
             user.setDistrict(rs.getString("district"));
-            user.setDob(rs.getDate("dob"));
+            user.setDob(rs.getDate("dob").toLocalDate());
             user.setPassword(rs.getString("password"));
             user.setRole(rs.getString("role"));
             user.setOprtnl_flag(rs.getBoolean("oprtnl_flag"));
